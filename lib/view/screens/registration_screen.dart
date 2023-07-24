@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:iti_graduation_project/utilities/app_colors.dart';
+import 'package:iti_graduation_project/view/screens/navigation_screen.dart';
+import 'package:iti_graduation_project/view/widgets/app_button.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -23,7 +26,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               "SIGN UP",
               style: TextStyle(
                   fontSize: 20,
-                  color: Colors.text,
+                  color: Colors.blueGrey,
                   fontWeight: FontWeight.bold),
             ),
             const Padding(
@@ -32,7 +35,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 "Create an Account",
                 style: TextStyle(
                     fontSize: 24,
-                    color: Colors.text,
+                    color: Colors.blueGrey,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -40,7 +43,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               "Enter email address to create an account!",
               style: TextStyle(
                 fontSize: 18,
-                color: Colors.text,
+                color: Colors.blueGrey,
               ),
             ),
             Padding(
@@ -54,7 +57,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                   style: ElevatedButton.styleFrom(
                       primary: Colors.white,
-                      onPrimary: Colors.text,
+                      onPrimary: Colors.blueGrey,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 60, vertical: 10),
                       shape: RoundedRectangleBorder(
@@ -66,19 +69,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
-                    child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.primary,
-                            onPrimary: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 127, vertical: 12),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15))),
-                        child: const Text(
-                          "Sign up",
-                          style: TextStyle(fontSize: 16),
-                        )
+                    child: AppButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NavigationScreen(),
+                          ),
+                        );
+                      },
+                      text: 'Sign Up',
+                      color: AppColors.primary,
                     ),
                   ),
                 ],

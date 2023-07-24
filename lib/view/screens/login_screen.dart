@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iti_graduation_project/view/login_registration/registration_screen.dart';
+import 'package:iti_graduation_project/view/screens/registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

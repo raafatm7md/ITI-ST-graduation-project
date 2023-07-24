@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:iti_graduation_project/view/login_registration/login_screen.dart';
+import 'package:iti_graduation_project/view/screens/login_screen.dart';
+import 'package:iti_graduation_project/view/widgets/app_button.dart';
+import 'package:iti_graduation_project/utilities/app_colors.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -13,13 +15,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ElevatedButton(
+        child: AppButton(
+          text: "Get Started",
+          color: AppColors.primary,
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LoginScreen())
-            );
-          }, child: const Text("next"),
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LoginScreen()));
+          },
         ),
       ),
     );
