@@ -7,4 +7,5 @@ abstract class AppColors {
   static const Color background = Color(0xFFF8F8FA);
   static const Color warning = Color(0xFFFF5545);
   static const Color light = Color(0xFFFFBC42);
+
 }
