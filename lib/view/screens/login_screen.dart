@@ -172,22 +172,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 15,
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  const Text("Does not have an account?",
-                      style: TextStyle(
-                        fontSize: 15.0,
-                      )),
-                  const SizedBox(
-                    width: 10,
+                  const Expanded(
+                    child: Text("Does not have an account?",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                        )),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const RegistrationScreen()));
-                    },
-                    child: const Text("Create New Account"),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const RegistrationScreen()));
+                      },
+                      child: const Text("Create New Account"),
+                    ),
                   ),
                 ]),
               ],
