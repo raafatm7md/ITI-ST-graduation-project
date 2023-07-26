@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           final scaffoldContext = ScaffoldMessenger.of(context);
-                          bool loginOuput = await Firebase_auth(
+                          bool loginOuput = await firebaseAuth(
                               emailController.text, passwordController.text);
                           if (loginOuput == true) {
                             Navigator.push(
@@ -226,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   // Authenticate and manage users with firebase.
-  Future<bool> Firebase_auth(String email, String password) async {
+  Future<bool> firebaseAuth(String email, String password) async {
     bool output = false;
     try {
       UserCredential userCredential = await FirebaseAuth.instance
