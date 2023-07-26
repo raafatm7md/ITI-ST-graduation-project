@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iti_graduation_project/view/screens/navigation_screen.dart';
 import 'package:iti_graduation_project/view/screens/registration_screen.dart';
-
 import '../widgets/app_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -28,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 const Center(
                     child: Padding(
-                  padding: EdgeInsets.all(35.0),
+                  padding: EdgeInsets.all(25.0),
                   child: Text(
                     "LOG IN",
                     style: TextStyle(
@@ -48,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 10,
                 ),
                 Container(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(8.0),
                   alignment: Alignment.center,
                   child: ElevatedButton.icon(
                       onPressed: () {},
@@ -72,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Colors.blueGrey,
                         fontWeight: FontWeight.bold)),
                 Padding(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
@@ -111,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Colors.blueGrey,
                         fontWeight: FontWeight.bold)),
                 Padding(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: TextFormField(
                     obscureText: isPasswordHidden,
                     decoration: InputDecoration(
@@ -150,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 15,
                 ),
                 SizedBox(
                   height: 50.0,
@@ -170,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 15,
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   const Text("Does not have an account?",
