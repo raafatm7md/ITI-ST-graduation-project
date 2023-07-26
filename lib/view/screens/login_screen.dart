@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iti_graduation_project/view/screens/navigation_screen.dart';
 import 'package:iti_graduation_project/view/screens/registration_screen.dart';
@@ -12,6 +13,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   bool isPasswordHidden = true;
   @override
   Widget build(BuildContext context) {
@@ -74,6 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.all(4.0),
                   child: TextFormField(
                     keyboardType: TextInputType.emailAddress,
+                    controller: emailController,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(
                           borderSide:
@@ -112,6 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: TextFormField(
+                    controller: passwordController,
                     obscureText: isPasswordHidden,
                     decoration: InputDecoration(
                         border: const OutlineInputBorder(
@@ -155,18 +160,31 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 50.0,
                   width: double.infinity,
                   child: AppButton(
-                    color: Colors.lightBlue,
-                    text: 'login',
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const NavigationScreen()));
-                      }
-                    },
-                  ),
+                      color: Colors.lightBlue,
+                      text: 'login',
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          final scaffoldContext = ScaffoldMessenger.of(context);
+                          bool loginOuput = await Firebase_auth(
+                              emailController.text, passwordController.text);
+                          if (loginOuput == true) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const NavigationScreen()));
+                          } else {
+                            scaffoldContext.hideCurrentSnackBar();
+                            scaffoldContext.showSnackBar(SnackBar(
+                                content: const Text("Login faild, Try again"),
+                                action: SnackBarAction(
+                                  label: 'Dismiss',
+                                  onPressed:
+                                      scaffoldContext.hideCurrentSnackBar,
+                                )));
+                          }
+                        }
+                      }),
                 ),
                 const SizedBox(
                   height: 15,
@@ -198,11 +216,29 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     ));
   }
-}
 
-bool isEmail(String email) {
-  String regularExpression =
-      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-  RegExp regExp = RegExp(regularExpression);
-  return regExp.hasMatch(email);
+// Email validation.
+  bool isEmail(String email) {
+    String regularExpression =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regExp = RegExp(regularExpression);
+    return regExp.hasMatch(email);
+  }
+
+  // Authenticate and manage users with firebase.
+  Future<bool> Firebase_auth(String email, String password) async {
+    bool output = false;
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      final user = userCredential.user;
+      if (user != null) {
+        print(user?.uid);
+        output = true;
+      }
+      return output;
+    } catch (e) {
+      return output;
+    }
+  }
 }
