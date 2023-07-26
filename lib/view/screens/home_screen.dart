@@ -4,10 +4,10 @@ import 'package:iti_graduation_project/utilities/app_colors.dart';
 import 'package:iti_graduation_project/view/product/products_cubit.dart';
 import 'package:iti_graduation_project/view/widgets/custom_button.dart';
 import 'package:iti_graduation_project/view/widgets/header_text.dart';
-import 'package:iti_graduation_project/widget/custom_text.dart';
+import 'package:iti_graduation_project/view/widgets/custom_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../widget/item.dart';
+import '../widgets/item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

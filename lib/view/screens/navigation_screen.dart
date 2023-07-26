@@ -50,7 +50,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
             backgroundColor: AppColors.text,
             currentIndex: _selectedIndex,
             showSelectedLabels: false,
-            selectedLabelStyle: TextStyle(color: AppColors.text),
+            selectedLabelStyle: const TextStyle(color: AppColors.text),
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(
