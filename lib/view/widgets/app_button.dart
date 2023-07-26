@@ -6,8 +6,12 @@ class AppButton extends StatelessWidget {
   final Color color;
   final String text;
   final ButtonCallback onPressed;
+  double horizental;
+  double vertical;
 
-  const AppButton({
+  AppButton({
+    this.vertical = 12,
+    this.horizental = 127,
     required this.color,
     required this.text,
     required this.onPressed,
@@ -17,16 +21,17 @@ class AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-            primary: color,
-            onPrimary: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 127, vertical: 12),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15))),
-        child: Text(
-          text,
-          style: const TextStyle(fontSize: 16),
-        ));
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+          primary: color,
+          onPrimary: Colors.white,
+          padding: EdgeInsets.symmetric(horizontal: horizental, vertical: 12),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+      child: Text(
+        text,
+        style: const TextStyle(fontSize: 16),
+      ),
+    );
   }
 }
