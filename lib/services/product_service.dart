@@ -6,7 +6,6 @@ class ProductService {
     List<Product> products = [];
     final querySnapshot =
         await FirebaseFirestore.instance.collection('products').get();
-    print("\n\n\n--------------------\nTHE PROBLEM IS HERE\n---------------------------------\n\n\n\n\n\n");
     products =
         querySnapshot.docs.map((doc) => Product.fromFirestore(doc)).toList();
     return products;

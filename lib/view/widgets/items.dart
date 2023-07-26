@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iti_graduation_project/view/widgets/header_text.dart';
 
-
 class Item extends StatefulWidget {
   final String imageUrl;
   final String itemName;

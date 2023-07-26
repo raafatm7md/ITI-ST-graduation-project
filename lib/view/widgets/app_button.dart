@@ -6,10 +6,10 @@ class AppButton extends StatelessWidget {
   final Color color;
   final String text;
   final ButtonCallback onPressed;
-  double horizental;
-  double vertical;
+  final double horizental;
+  final double vertical;
 
-  AppButton({
+  const AppButton({
     this.vertical = 12,
     this.horizental = 127,
     required this.color,
