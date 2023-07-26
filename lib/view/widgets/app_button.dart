@@ -19,9 +19,11 @@ class AppButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-            primary: color,
-            onPrimary: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 127, vertical: 12),
+            foregroundColor: Colors.white,
+            backgroundColor: color,
+            alignment: AlignmentDirectional.center,
+            fixedSize: const Size(350, 50),
+            maximumSize: Size(MediaQuery.of(context).size.width, 50),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15))),
         child: Text(
