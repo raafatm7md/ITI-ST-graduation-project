@@ -18,7 +18,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   final List<Map<String, Object>> screens = [
     {"screen": const HomeScreen(), "title": "HOME"},
     {"screen": const CategoriesScreen(), "title": "CATEGORIES"},
-    {"screen": const ProfileScreen(), "title": "PROFILE"},
+    {"screen":  ProfileScreen(), "title": "PROFILE"},
   ];
   var _selectedIndex = 0;
 
