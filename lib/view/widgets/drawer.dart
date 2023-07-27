@@ -73,11 +73,12 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             title: const Text("Sign Out"),
             onTap: () {
-              Navigator.push(
+              Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const LoginScreen(),
                 ),
+                (_) => false,
               );
             },
             leading: const Icon(
