@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/button.dart';
+import 'package:iti_graduation_project/utilities/app_colors.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({super.key});
@@ -14,9 +14,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  User? user = FirebaseAuth.instance.currentUser;
+  
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       //عشان نخلي البيدج بعيده عن الحيطه 15 بيكسل
       child: Padding(
@@ -31,55 +33,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 backgroundImage: NetworkImage(
                     "https://th.bing.com/th?id=OIP.1f4L8uI7SgYFrlQ1taL1YgHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               //الاسم
               const Text(
-                "first name",
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-              //الاسم الفرعي
-              const Text(
-                "Sub name",
+                "Username",
                 style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.text),
+              ),
+              const SizedBox(height: 27),
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 50,
+                child: const Text(
+                  "Email",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
                     color: Colors.blueGrey,
-                    fontWeight: FontWeight.w400),
-              ),
-              const SizedBox(
-                height: 27,
-              ),
-              PutTextFormField(10, "name & subname", "Name",
-                  controllerResive: widget.name),
-              const SizedBox(
-                height: 27,
-              ),
-              PutTextFormField(2, "Email", "Email",
-                  controllerResive: widget.email),
-              const SizedBox(
-                height: 27,
-              ),
-              PutTextFormField(10, "", "Phone Number",
-                  controllerResive: widget.phoneNumber),
-              const SizedBox(
-                height: 50,
-              ),
-              //كونتينر الزرار
-              Container(
-                height: 60,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(20)),
-                child: MaterialButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "Save change",
-                    style: TextStyle(color: Colors.white, fontSize: 26),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              )
+              ),
+              const SizedBox(height: 15),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: Container(
+                  color: AppColors.background,
+                  width: MediaQuery.of(context).size.width - 50,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 25),
+                  child: Text(
+                    user != null ? user!.displayName as String : "first name",
+                    style: const TextStyle(
+                      fontSize: 19,
+                      color: AppColors.text,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 27),
             ],
           ),
         ),
