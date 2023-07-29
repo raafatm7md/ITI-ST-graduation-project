@@ -64,12 +64,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: ElevatedButton.icon(
-                      onPressed: () {
-                        signUpWithGoogle().whenComplete(() => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                        builder: (context) => const NavigationScreen()),)
-                        );
+                      onPressed: () async {
+                        UserCredential? credential = await signUpWithGoogle();
+                        if (credential.user != null) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const NavigationScreen()),
+                          );
+                        }
                       },
                       icon:
                           Image.asset('assets/Google__G__Logo.png', height: 25),
@@ -246,10 +249,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   password: passwordController.text);
                               if (user != null) {
                                 scaffoldContext.hideCurrentSnackBar();
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const NavigationScreen()),
+                                      builder: (context) => NavigationScreen()),
                                 );
                               } else {
                                 if (snackBar) {

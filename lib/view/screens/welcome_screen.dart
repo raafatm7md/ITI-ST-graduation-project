@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iti_graduation_project/view/screens/login_screen.dart';
 import 'package:iti_graduation_project/view/widgets/app_button.dart';
 import 'package:iti_graduation_project/utilities/app_colors.dart';
+import 'navigation_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -11,6 +13,8 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,10 +55,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   text: "Get Started",
                   color: AppColors.primary,
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginScreen()));
+                    user?.email != null
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const NavigationScreen()))
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()));
                   },
                 ),
               ),

@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   BorderSide lEmailSide = BorderSide.none;
   BorderSide lPasswordSide = BorderSide.none;
   double lPadding = 20.0;
+  bool lSnackBar = true;
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +58,15 @@ class _LoginScreenState extends State<LoginScreen> {
       Padding(
         padding: const EdgeInsets.only(top: 15),
         child: ElevatedButton.icon(
-            onPressed: () {
-              signUpWithGoogle().whenComplete(() => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const NavigationScreen()),)
-              );
+            onPressed: () async {
+              UserCredential? credential = await signUpWithGoogle();
+              if (credential.user != null) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const NavigationScreen()),
+                );
+              }
             },
             icon: Image.asset('assets/Google__G__Logo.png', height: 25),
             label: const Text(
@@ -200,7 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 lPasswordController.text);
                             if (loginOutput == true) {
                               scaffoldContext.hideCurrentSnackBar();
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
@@ -208,12 +212,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               );
                             } else {
-                              scaffoldContext.hideCurrentSnackBar();
-                              scaffoldContext.showSnackBar(const SnackBar(
-                                backgroundColor: AppColors.background,
-                                content: Text("Login failed, Try again",
-                                    style: TextStyle(color: AppColors.text)),
-                              ));
+                              if (lSnackBar) {
+                                scaffoldContext.hideCurrentSnackBar();
+                                scaffoldContext.showSnackBar(const SnackBar(
+                                  backgroundColor: AppColors.background,
+                                  content: Text("Login failed, Try again",
+                                      style: TextStyle(color: AppColors.text)),
+                                ));
+                              }
                             }
                           } else {
                             lPadding = 10.0;
@@ -247,7 +253,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsetsDirectional.only(start: 30),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
@@ -275,6 +281,33 @@ class _LoginScreenState extends State<LoginScreen> {
       final user = userCredential.user;
       if (user != null) {
         output = true;
+      }
+      return output;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'wrong-password') {
+        lPasswordSide = const BorderSide();
+        setState(() {});
+        lSnackBar = false;
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: AppColors.background,
+          content: Text(
+            "Wrong password, Try again",
+            style: TextStyle(color: AppColors.text),
+          ),
+        ));
+      } else if (e.code == 'user-not-found') {
+        lEmailSide = const BorderSide();
+        setState(() {});
+        lSnackBar = false;
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: AppColors.background,
+          content: Text(
+            "Wrong email address, Try again",
+            style: TextStyle(color: AppColors.text),
+          ),
+        ));
       }
       return output;
     } catch (e) {

@@ -1,8 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iti_graduation_project/utilities/app_colors.dart';
-import 'package:iti_graduation_project/view/screens/login_screen.dart';
+import 'package:iti_graduation_project/utilities/google_signin.dart';
 import 'package:iti_graduation_project/view/screens/navigation_screen.dart';
-
+import 'package:iti_graduation_project/view/screens/welcome_screen.dart';
 import '../screens/about_screen.dart';
 import '../screens/developers_screen.dart';
 
@@ -72,11 +73,13 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             title: const Text("Sign Out"),
-            onTap: () {
+            onTap: () async {
+              googleSignOut();
+              await FirebaseAuth.instance.signOut();
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const LoginScreen(),
+                  builder: (context) => const WelcomeScreen(),
                 ),
                 (_) => false,
               );
