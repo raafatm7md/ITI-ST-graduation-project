@@ -21,6 +21,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   BorderSide emailSide = BorderSide.none;
   BorderSide passwordSide = BorderSide.none;
   double padding = 20.0;
+  bool snackBar = true;
 
   @override
   Widget build(BuildContext context) {
@@ -220,37 +221,45 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             if (_formKey.currentState!.validate()) {
                               padding = 20.0;
                               setState(() {});
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
+                              final scaffoldContext =
+                                  ScaffoldMessenger.of(context);
+                              scaffoldContext.hideCurrentSnackBar();
+                              scaffoldContext.showSnackBar(const SnackBar(
                                 backgroundColor: AppColors.background,
                                 content: Text(
                                   "Loading ...",
                                   style: TextStyle(color: AppColors.text),
                                 ),
+                                duration: Duration(seconds: 8),
                               ));
                               User? user = await registerUsingEmailPassword(
                                   username: usernameController.text,
                                   email: emailController.text,
                                   password: passwordController.text);
                               if (user != null) {
+                                scaffoldContext.hideCurrentSnackBar();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => NavigationScreen()),
                                 );
                               } else {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(
-                                  backgroundColor: AppColors.background,
-                                  content: Text(
-                                    "Error in processing, Try again!",
-                                    style: TextStyle(color: AppColors.text),
-                                  ),
-                                ));
+                                if (snackBar) {
+                                  scaffoldContext.hideCurrentSnackBar();
+                                  scaffoldContext.showSnackBar(const SnackBar(
+                                    backgroundColor: AppColors.background,
+                                    content: Text(
+                                      "Error in connection, Try again!",
+                                      style: TextStyle(color: AppColors.text),
+                                    ),
+                                  ));
+                                }
                               }
                             } else {
                               padding = 10.0;
                               setState(() {});
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
                                 backgroundColor: AppColors.background,
@@ -303,6 +312,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       if (e.code == 'weak-password') {
         passwordSide = const BorderSide();
         setState(() {});
+        snackBar = false;
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: AppColors.background,
           content: Text(
@@ -313,6 +324,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       } else if (e.code == 'email-already-in-use') {
         emailSide = const BorderSide();
         setState(() {});
+        snackBar = false;
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: AppColors.background,
           content: Text(
