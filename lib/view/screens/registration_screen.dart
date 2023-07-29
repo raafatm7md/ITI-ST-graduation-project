@@ -3,6 +3,8 @@ import 'package:iti_graduation_project/utilities/app_colors.dart';
 import 'package:iti_graduation_project/view/screens/navigation_screen.dart';
 import 'package:iti_graduation_project/view/widgets/app_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../utilities/google_signin.dart';
+import '../../utilities/isEmail_method.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -62,7 +64,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        signUpWithGoogle().whenComplete(() => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                        builder: (context) => const NavigationScreen()),)
+                        );
+                      },
                       icon:
                           Image.asset('assets/Google__G__Logo.png', height: 25),
                       label: const Text(
@@ -241,7 +249,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => NavigationScreen()),
+                                      builder: (context) => const NavigationScreen()),
                                 );
                               } else {
                                 if (snackBar) {
@@ -283,13 +291,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
       ),
     );
-  }
-
-  bool isEmail(String email) {
-    String regularExpression =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regExp = RegExp(regularExpression);
-    return regExp.hasMatch(email);
   }
 
   Future<User?> registerUsingEmailPassword({

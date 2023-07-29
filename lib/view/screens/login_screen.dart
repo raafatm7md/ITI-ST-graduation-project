@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:iti_graduation_project/view/screens/navigation_screen.dart';
 import 'package:iti_graduation_project/view/screens/registration_screen.dart';
 import '../../utilities/app_colors.dart';
+import '../../utilities/google_signin.dart';
+import '../../utilities/isEmail_method.dart';
 import '../widgets/app_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -55,7 +57,13 @@ class _LoginScreenState extends State<LoginScreen> {
       Padding(
         padding: const EdgeInsets.only(top: 15),
         child: ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              signUpWithGoogle().whenComplete(() => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NavigationScreen()),)
+              );
+            },
             icon: Image.asset('assets/Google__G__Logo.png', height: 25),
             label: const Text(
               "Continue with Google",
@@ -256,14 +264,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     ])))));
-  }
-
-// Email validation.
-  bool isEmail(String email) {
-    String regularExpression =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regExp = RegExp(regularExpression);
-    return regExp.hasMatch(email);
   }
 
   // Authenticate and manage users with firebase.
