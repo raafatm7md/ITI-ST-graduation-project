@@ -88,7 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                               backgroundColor: AppColors.background,
                               content: Text(
-                                "Verification email sent",
+                                "Verification email is sent",
                                 style: TextStyle(color: AppColors.text),
                               ),
                             ));
