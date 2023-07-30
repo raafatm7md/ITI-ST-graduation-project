@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'about_application.dart';
 import 'developers_screen.dart';
 
