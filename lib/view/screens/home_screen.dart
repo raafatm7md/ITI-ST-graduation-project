@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:iti_graduation_project/models/product_model.dart';
 import 'package:iti_graduation_project/utilities/app_colors.dart';
 import 'package:iti_graduation_project/view/product/products_cubit.dart';
+import 'package:iti_graduation_project/view/screens/product_screen.dart';
 import 'package:iti_graduation_project/view/widgets/custom_button.dart';
 import 'package:iti_graduation_project/view/widgets/header_text.dart';
 import 'package:iti_graduation_project/view/widgets/custom_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../widgets/item.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
             BlocBuilder<ProductsCubit, ProductsState>(
               builder: (context, state) {
                 final List<Product> products =
@@ -109,17 +109,32 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisSpacing: 40,
+                          crossAxisSpacing: 30,
                           mainAxisSpacing: 30,
                           childAspectRatio: 5.5 / 7,
                           crossAxisCount: 2,
                         ),
                         itemCount: products.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Item(
-                            imageUrl: products[index].imageUrl,
-                            itemName: products[index].name,
-                            price: products[index].price.toString(),
+                          return InkWell(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProductScreen(
+                                          productName: products[index].name,
+                                          productImg: products[index].imageUrl,
+                                          productPrice:
+                                              products[index].price.toString(),
+                                          productCategory:
+                                              products[index].category,
+                                          productAvailability:
+                                              products[index].inCart,
+                                        ))),
+                            child: Item(
+                              imageUrl: products[index].imageUrl,
+                              itemName: products[index].name,
+                              price: products[index].price.toString(),
+                            ),
                           );
                         },
                       ),
