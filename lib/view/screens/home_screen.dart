@@ -17,19 +17,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  
-  
-  
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ProductsCubit(),
-      child: BlocConsumer<ProductsCubit, ProductsState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          final List<Product> products =
-              context.watch<ProductsCubit>().products;
-          return Column(children: [
+      child: Scaffold(
+        body: Column(
+          children: [
             Padding(
               padding: const EdgeInsets.only(
                 left: 15,
@@ -85,11 +79,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             onPressed: () {},
                             icon: Icons.woman_2_outlined),
                         CustomButton(
-                            text: "Men",
+                            text: "Volly",
                             onPressed: () {},
                             icon: Icons.sports_baseball_outlined),
                         CustomButton(
-                            text: "Women",
+                            text: "Football",
                             onPressed: () {},
                             icon: Icons.sports_soccer_outlined),
                       ],
@@ -98,26 +92,44 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
-                itemCount: products.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Item(
-                    imageUrl: products[index].imageUrl,
-                    itemName: products[index].name,
-                    price: products[index].price.toString(),
+            const SizedBox(height: 8),
+            BlocBuilder<ProductsCubit, ProductsState>(
+              builder: (context, state) {
+                final List<Product> products =
+                    context.watch<ProductsCubit>().products;
+                if (state is ProductsLoading) {
+                  return const Column(children: [
+                    SizedBox(height: 100),
+                    CircularProgressIndicator()
+                  ]);
+                } else {
+                  return Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisSpacing: 40,
+                          mainAxisSpacing: 30,
+                          childAspectRatio: 5.5 / 7,
+                          crossAxisCount: 2,
+                        ),
+                        itemCount: products.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Item(
+                            imageUrl: products[index].imageUrl,
+                            itemName: products[index].name,
+                            price: products[index].price.toString(),
+                          );
+                        },
+                      ),
+                    ),
                   );
-                },
-              ),
-            ),
-          ]);
-        },
+                }
+              },
+            )
+          ],
+        ),
       ),
     );
   }
