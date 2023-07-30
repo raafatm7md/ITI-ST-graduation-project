@@ -29,10 +29,10 @@ class _ItemState extends State<Item> {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              blurRadius: 5,
-              spreadRadius: 1.5,
-              offset: const Offset(0, 4),
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 1,
+              spreadRadius: 1,
+              offset: const Offset(0, 1),
             )
           ],
         ),

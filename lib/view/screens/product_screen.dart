@@ -49,17 +49,17 @@ class _ProductScreenState extends State<ProductScreen> {
                   ),
                   widget.productCategory == 'men' ||
                           widget.productCategory == 'man'
-                      ? const Icon(
+                      ? Icon(
                           Icons.man_2_outlined,
                           size: 50,
-                          color: AppColors.text,
+                          color: AppColors.text.withOpacity(0.7),
                         )
                       : widget.productCategory == 'woman' ||
                               widget.productCategory == 'women'
-                          ? const Icon(
+                          ? Icon(
                               Icons.woman_2_outlined,
                               size: 50,
-                              color: AppColors.text,
+                              color: AppColors.text.withOpacity(0.7),
                             )
                           : widget.productCategory == 'volly' ||
                                   widget.productCategory == 'Volly'
@@ -90,26 +90,29 @@ class _ProductScreenState extends State<ProductScreen> {
               ),
             ),
             Container(
-                padding: const EdgeInsetsDirectional.only(start: 20, top: 50),
-                child: widget.productAvailability
-                    ? const Text(
-                        "Available",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: AppColors.text,
-                        ),
-                      )
-                    : const Text("Not Available",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: AppColors.text,
-                        )))
+              padding: const EdgeInsetsDirectional.only(start: 20, top: 50),
+              child: widget.productAvailability
+                  ? const Text(
+                      "Available",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.green,
+                      ),
+                    )
+                  : const Text(
+                      "Not Available",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: AppColors.warning,
+                      ),
+                    ),
+            ),
           ],
         ),
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(6),
-        child: Container(
+        child: SizedBox(
           height: 140,
           width: 110,
           child: FloatingActionButton.large(
