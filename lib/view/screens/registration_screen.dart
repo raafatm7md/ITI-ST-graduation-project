@@ -225,64 +225,67 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: (padding + 25)),
-                        child: AppButton(
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              padding = 20.0;
-                              setState(() {});
-                              final scaffoldContext =
-                                  ScaffoldMessenger.of(context);
-                              scaffoldContext.hideCurrentSnackBar();
-                              scaffoldContext.showSnackBar(const SnackBar(
-                                backgroundColor: AppColors.background,
-                                content: Text(
-                                  "Loading ...",
-                                  style: TextStyle(color: AppColors.text),
-                                ),
-                                duration: Duration(seconds: 8),
-                              ));
-                              User? user = await registerUsingEmailPassword(
-                                  username: usernameController.text,
-                                  email: emailController.text,
-                                  password: passwordController.text);
-                              if (user != null) {
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: (padding + 25)),
+                          child: AppButton(
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                padding = 20.0;
+                                setState(() {});
+                                final scaffoldContext =
+                                    ScaffoldMessenger.of(context);
                                 scaffoldContext.hideCurrentSnackBar();
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => NavigationScreen()),
-                                );
-                              } else {
-                                if (snackBar) {
+                                scaffoldContext.showSnackBar(const SnackBar(
+                                  backgroundColor: AppColors.background,
+                                  content: Text(
+                                    "Loading ...",
+                                    style: TextStyle(color: AppColors.text),
+                                  ),
+                                  duration: Duration(seconds: 8),
+                                ));
+                                User? user = await registerUsingEmailPassword(
+                                    username: usernameController.text,
+                                    email: emailController.text,
+                                    password: passwordController.text);
+                                if (user != null) {
                                   scaffoldContext.hideCurrentSnackBar();
-                                  scaffoldContext.showSnackBar(const SnackBar(
-                                    backgroundColor: AppColors.background,
-                                    content: Text(
-                                      "Error in connection, Try again!",
-                                      style: TextStyle(color: AppColors.text),
-                                    ),
-                                  ));
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            NavigationScreen()),
+                                  );
+                                } else {
+                                  if (snackBar) {
+                                    scaffoldContext.hideCurrentSnackBar();
+                                    scaffoldContext.showSnackBar(const SnackBar(
+                                      backgroundColor: AppColors.background,
+                                      content: Text(
+                                        "Error in connection, Try again!",
+                                        style: TextStyle(color: AppColors.text),
+                                      ),
+                                    ));
+                                  }
                                 }
+                              } else {
+                                padding = 10.0;
+                                setState(() {});
+                                ScaffoldMessenger.of(context)
+                                    .hideCurrentSnackBar();
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  backgroundColor: AppColors.background,
+                                  content: Text(
+                                    "Please check your data",
+                                    style: TextStyle(color: AppColors.text),
+                                  ),
+                                ));
                               }
-                            } else {
-                              padding = 10.0;
-                              setState(() {});
-                              ScaffoldMessenger.of(context)
-                                  .hideCurrentSnackBar();
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                backgroundColor: AppColors.background,
-                                content: Text(
-                                  "Please check your data",
-                                  style: TextStyle(color: AppColors.text),
-                                ),
-                              ));
-                            }
-                          },
-                          text: 'Sign Up',
-                          color: AppColors.primary,
+                            },
+                            text: 'Sign Up',
+                            color: AppColors.primary,
+                          ),
                         ),
                       ),
                     ],

@@ -177,64 +177,68 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: const TextStyle(color: AppColors.text),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(top: (lPadding + 25)),
-                    child: AppButton(
-                        color: Colors.lightBlue,
-                        text: 'login',
-                        onPressed: () async {
-                          if (lFormKey.currentState!.validate()) {
-                            lPadding = 20.0;
-                            setState(() {});
-                            final scaffoldContext =
-                                ScaffoldMessenger.of(context);
-                            scaffoldContext.hideCurrentSnackBar();
-                            scaffoldContext.showSnackBar(
-                              const SnackBar(
-                                backgroundColor: AppColors.background,
-                                content: Text(
-                                  "Loading ...",
-                                  style: TextStyle(color: AppColors.text),
-                                ),
-                                duration: Duration(seconds: 8),
-                              ),
-                            );
-                            bool loginOutput = await firebaseAuth(
-                                lEmailController.text,
-                                lPasswordController.text);
-                            if (loginOutput == true) {
+                  Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: (lPadding + 25)),
+                      child: AppButton(
+                          color: Colors.lightBlue,
+                          text: 'login',
+                          onPressed: () async {
+                            if (lFormKey.currentState!.validate()) {
+                              lPadding = 20.0;
+                              setState(() {});
+                              final scaffoldContext =
+                                  ScaffoldMessenger.of(context);
                               scaffoldContext.hideCurrentSnackBar();
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const NavigationScreen(),
+                              scaffoldContext.showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: AppColors.background,
+                                  content: Text(
+                                    "Loading ...",
+                                    style: TextStyle(color: AppColors.text),
+                                  ),
+                                  duration: Duration(seconds: 8),
                                 ),
                               );
-                            } else {
-                              if (lSnackBar) {
+                              bool loginOutput = await firebaseAuth(
+                                  lEmailController.text,
+                                  lPasswordController.text);
+                              if (loginOutput == true) {
                                 scaffoldContext.hideCurrentSnackBar();
-                                scaffoldContext.showSnackBar(const SnackBar(
-                                  backgroundColor: AppColors.background,
-                                  content: Text("Login failed, Try again",
-                                      style: TextStyle(color: AppColors.text)),
-                                ));
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const NavigationScreen(),
+                                  ),
+                                );
+                              } else {
+                                if (lSnackBar) {
+                                  scaffoldContext.hideCurrentSnackBar();
+                                  scaffoldContext.showSnackBar(const SnackBar(
+                                    backgroundColor: AppColors.background,
+                                    content: Text("Login failed, Try again",
+                                        style:
+                                            TextStyle(color: AppColors.text)),
+                                  ));
+                                }
                               }
+                            } else {
+                              lPadding = 10.0;
+                              setState(() {});
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                backgroundColor: AppColors.background,
+                                content: Text(
+                                  "Please check your data",
+                                  style: TextStyle(color: AppColors.text),
+                                ),
+                              ));
                             }
-                          } else {
-                            lPadding = 10.0;
-                            setState(() {});
-                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              backgroundColor: AppColors.background,
-                              content: Text(
-                                "Please check your data",
-                                style: TextStyle(color: AppColors.text),
-                              ),
-                            ));
-                          }
-                        }),
+                          }),
+                    ),
                   ),
                 ],
               ),

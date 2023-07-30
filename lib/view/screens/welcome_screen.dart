@@ -49,22 +49,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       color: Colors.blueGrey),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: AppButton(
-                  text: "Get Started",
-                  color: AppColors.primary,
-                  onPressed: () {
-                    user?.email != null
-                        ? Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const NavigationScreen()))
-                        : Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginScreen()));
-                  },
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: AppButton(
+                    text: "Get Started",
+                    color: AppColors.primary,
+                    onPressed: () {
+                      user?.email != null
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const NavigationScreen()))
+                          : Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreen()));
+                    },
+                  ),
                 ),
               ),
             ],
